@@ -14,7 +14,7 @@ const Home = () => {
 
   const join = () => {
     dispatch(setUserName(localName));
-    connect(localName);
+    connect(localName, selfRef, remoteRef);
   };
 
   return (
@@ -24,11 +24,12 @@ const Home = () => {
       <button onClick={join}>join</button>
       <video ref={remoteRef} autoPlay />
       <video ref={selfRef} muted autoPlay />
-      <button onClick={() => askMedia(selfRef)}>Ask media</button>
       <h2>Users</h2>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <li key={user.id}>
+            {user.name} <button onClick={() => askMedia(selfRef, remoteRef, localName, user.name)}>Ask media</button>
+          </li>
         ))}
       </ul>
     </>
