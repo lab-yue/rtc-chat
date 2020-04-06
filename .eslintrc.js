@@ -5,6 +5,7 @@ module.exports = {
     tsconfigRootDir: '.'
   },
   rules: {
-    "no-console": "off"
+    "no-console": "off",
+    "react-hooks/rules-of-hooks": "off"
   }
 };

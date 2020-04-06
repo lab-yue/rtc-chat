@@ -1,7 +1,11 @@
 //import Head from "next/head";
 import { useEffect, useRef } from 'react';
+import { selectUserName, setUserName } from '../store';
+import { useDispatch } from 'react-redux';
 
 const Home = () => {
+  const name = selectUserName();
+  const dispatch = useDispatch();
   const selfRef = useRef<HTMLVideoElement>();
   const remoteRef = useRef<HTMLVideoElement>();
 
@@ -66,7 +70,8 @@ const Home = () => {
 
   return (
     <>
-      Home
+      Home - {name}
+      <input type="text" value={name} onChange={(e) => dispatch(setUserName(e.target.value))} />
       <video ref={remoteRef} autoPlay />
       <video ref={selfRef} muted autoPlay />
       <button onClick={askMedia}>Ask media</button>
