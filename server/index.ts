@@ -29,14 +29,20 @@ nextApp.prepare().then(() => {
 });
 
 const wss = new WebSocket.Server({ server });
-
+const counter = createCounter();
 wss.on('connection', (ws, req) => {
   console.log(req.connection.remoteAddress);
   ws.on('message', (data) => {
+    let d = JSON.parse(data.toString());
     wss.clients.forEach((client) => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(data);
+        client.send(JSON.stringify({ ...d, id: counter.next().value }));
       }
     });
   });
 });
+
+function* createCounter() {
+  let index = 0;
+  while (true) yield index++;
+}

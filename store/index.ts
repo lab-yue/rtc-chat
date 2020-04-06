@@ -4,6 +4,7 @@ import { useSelector, shallowEqual } from 'react-redux';
 import rootReducer, { RootState } from './rootReducer';
 
 export * from './userInfo';
+export * from './userList';
 
 const store = configureStore({
   reducer: rootReducer
