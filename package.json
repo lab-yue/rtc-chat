@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "TS_NODE_PROJECT=tsconfig.server.json ts-node-dev --respawn --transpileOnly server/index.ts",
+    "dev": "TS_NODE_PROJECT=tsconfig.server.json ts-node-dev --ignore-watch .next --respawn --transpileOnly server/index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx --ignore-path .gitignore ."
