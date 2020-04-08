@@ -1,5 +1,5 @@
 //import Head from "next/head";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { selectUserName, setUserName, selectUsers, selectIceStatus } from '../store';
 import { useDispatch } from 'react-redux';
 import { connect, useRTCContext } from '../connection';
@@ -10,8 +10,7 @@ const Home = () => {
   const ice = selectIceStatus();
   const users = selectUsers();
   const dispatch = useDispatch();
-
-  const { localRef, remoteRef, call } = useRTCContext(name);
+  const { call, localRef, remoteRef } = useRTCContext(name);
   const join = () => {
     dispatch(setUserName(localName));
     connect(localName);

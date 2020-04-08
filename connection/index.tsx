@@ -57,7 +57,7 @@ const handleSignalingStateChange = async () => {
   console.log('handleSignalingStateChange');
 };
 
-export const createPeerConnection = async (): Promise<RTCPeerConnection> => {
+export const createPeerConnection = async (ref: MutableRefObject<HTMLVideoElement>): Promise<RTCPeerConnection> => {
   const peerConnection = new RTCPeerConnection({
     iceServers: [
       // Information about ICE servers - Use your own!
@@ -77,11 +77,15 @@ export const createPeerConnection = async (): Promise<RTCPeerConnection> => {
   peerConnection.onicegatheringstatechange = () => {
     store.dispatch(setIceStatus(peerConnection.iceGatheringState));
     console.log(peerConnection);
+    if (peerConnection.iceGatheringState === 'complete') {
+      const tracks = peerConnection.getReceivers().map((r) => r.track);
+      const stream = new MediaStream(tracks);
+      console.log(stream);
+      attachStreamToVideo(ref, stream);
+    }
   };
   peerConnection.onsignalingstatechange = handleSignalingStateChange;
-  // return new Promise((resolve) => {
-  //   peerConnection.onnegotiationneeded = () => resolve(peerConnection);
-  // });
+
   return peerConnection;
 };
 
@@ -91,9 +95,22 @@ export const getUserMedia = async () => {
 
 export const addTracksToPeerConnection = (connection: RTCPeerConnection, stream: MediaStream) => {
   stream.getTracks().forEach((track) => connection.addTrack(track, stream));
+  return new Promise((ok) => {
+    connection.onnegotiationneeded = () => {
+      ok();
+    };
+  });
 };
 
 export const attachStreamToVideo = (ref: MutableRefObject<HTMLVideoElement>, stream: MediaStream) => {
+  if (!ref.current) {
+    console.log('no ref');
+    return;
+  }
+  if (ref.current.srcObject) {
+    console.log('attached');
+    return;
+  }
   ref.current.srcObject = stream;
 };
 
@@ -112,8 +129,9 @@ export const remoteAnswer = async () => {
 
 export const useRTCContext = (local: string) => {
   let done = false;
-  let localRef: MutableRefObject<HTMLVideoElement> = useRef();
-  let remoteRef: MutableRefObject<HTMLVideoElement> = useRef();
+
+  const localRef: MutableRefObject<HTMLVideoElement> = useRef();
+  const remoteRef: MutableRefObject<HTMLVideoElement> = useRef();
 
   if (!process.browser) return { localRef, remoteRef };
   console.log('useRTCContext');
@@ -150,10 +168,10 @@ export const useRTCContext = (local: string) => {
 
   const call = async (remote: string) => {
     console.log({ remote });
-    const peerConnection = await createPeerConnection();
+    const peerConnection = await createPeerConnection(remoteRef);
     exchangeCandidate(peerConnection, remote);
     const stream = await getUserMedia();
-    addTracksToPeerConnection(peerConnection, stream);
+    await addTracksToPeerConnection(peerConnection, stream);
     attachStreamToVideo(localRef, stream);
 
     const offer = await peerConnection.createOffer();
@@ -170,7 +188,7 @@ export const useRTCContext = (local: string) => {
 
   const answer = async (data: MeowEventOf<'RTC/invite'>) => {
     console.log({ answer: data.local });
-    const peerConnection = await createPeerConnection();
+    const peerConnection = await createPeerConnection(remoteRef);
     exchangeCandidate(peerConnection, data.local);
 
     await peerConnection.setRemoteDescription(data.sdp);
