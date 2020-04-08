@@ -1,16 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../types';
 import { useShallowEqualSelector } from '.';
-
-enum UserStatus {
-  online = 1,
-  offline = 0
-}
-
-type User = {
-  id: string;
-  name: string;
-  status: UserStatus;
-};
 
 type userList = {
   users: Record<string, User>;

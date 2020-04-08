@@ -5,6 +5,7 @@ import rootReducer, { RootState } from './rootReducer';
 
 export * from './userInfo';
 export * from './userList';
+export * from './ice';
 
 const store = configureStore({
   reducer: rootReducer

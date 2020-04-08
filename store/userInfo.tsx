@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../types';
 import { useShallowEqualSelector } from '.';
 
-type UserInfo = {
-  userName: string;
-};
-
-const initialState: UserInfo = {
-  userName: ''
+const initialState: User = {
+  id: '',
+  name: '',
+  status: 0
 };
 
 const userInfo = createSlice({
@@ -14,13 +13,13 @@ const userInfo = createSlice({
   initialState,
   reducers: {
     setUserName(state, action: PayloadAction<string>) {
-      state.userName = action.payload;
+      state.name = action.payload;
     }
   }
 });
 
 export const { setUserName } = userInfo.actions;
 
-export const selectUserName = () => useShallowEqualSelector((state) => state.userInfo.userName);
+export const selectUserName = () => useShallowEqualSelector((state) => state.userInfo.name);
 
 export const userInfoReducer = userInfo.reducer;
