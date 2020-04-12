@@ -1,6 +1,6 @@
 import { Global, css } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
-import { useTheme } from '../services';
+import { selectTheme } from '../services';
 import { useMemo, FC } from 'react';
 
 function MyApp({ Component, pageProps }) {
@@ -14,7 +14,7 @@ function MyApp({ Component, pageProps }) {
 }
 
 const Theme: FC = ({ children }) => {
-  const theme = useTheme();
+  const theme = selectTheme();
   return (
     <>
       <Global

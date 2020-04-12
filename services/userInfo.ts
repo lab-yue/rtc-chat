@@ -11,10 +11,11 @@ export type User = {
   status: UserStatus;
 };
 
-export const [useUser, setUser, selectFromUser] = createService<User>({
+const { set, select } = createService<User>({
   id: '',
   name: '',
   status: 0
 });
 
-export const selectUserName = () => selectFromUser((user) => user.name);
+export const selectUserName = select((u) => u.name);
+export const setUser = set((_, u: User) => u);

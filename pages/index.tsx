@@ -1,13 +1,13 @@
 //import Head from "next/head";
 import { useState } from 'react';
-import { useIceStatus, setIceStatus, ws } from '../services';
+import { selectIceStatus, setIceStatus, ws, selectUsers } from '../services';
 import { connect, useRTC } from '../connection';
 
 const Home = () => {
   // const [localName, setLocalName] = useState('');
   // const name = selectUserName();
   // const ice = selectIceStatus();
-  // const users = selectUsers();
+  const users = selectUsers();
   // const dispatch = useDispatch();
 
   // const { call, localRef, remoteRef } = useRTC(name);
@@ -16,7 +16,7 @@ const Home = () => {
   //   dispatch(setUserName(localName));
   //   connect(localName);
   // };
-  const ice = useIceStatus();
+  const ice = selectIceStatus();
   return (
     <>
       <h1>Home</h1>
@@ -27,13 +27,13 @@ const Home = () => {
       <video ref={remoteRef} autoPlay />
       <video ref={localRef} muted autoPlay />
       <h2>Users</h2> */}
-      {/* <ul>
+      <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.name} <button onClick={() => call(user.name)}>Ask media</button>
+            {user.name} <button>Ask media</button>
           </li>
         ))}
-      </ul> */}
+      </ul>
     </>
   );
 };

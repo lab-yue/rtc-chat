@@ -9,7 +9,7 @@ export type Theme = {
   };
 };
 
-export const [useTheme, setTheme] = createService<Theme>({
+const { select } = createService<Theme>({
   color: {
     primary: '#22c7a9',
     secondary: '#2db6a3',
@@ -17,3 +17,5 @@ export const [useTheme, setTheme] = createService<Theme>({
     paper: '#fef3cc'
   }
 });
+
+export const selectTheme = select();

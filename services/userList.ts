@@ -3,5 +3,11 @@ import { User } from './userInfo';
 export type UserList = {
   users: Record<string, User>;
 };
-export const [useUserList, setUserList, selectFromUserList] = createService<UserList>({ users: {} });
-export const selectUsers = () => selectFromUserList((state) => Object.values(state.users));
+const { set, select } = createService<UserList>({ users: {} });
+
+export const selectUsers = select((s) => Object.values(s.users));
+
+export const addUser = set((state, u: User) => {
+  state.users[u.id] = u;
+  return state;
+});

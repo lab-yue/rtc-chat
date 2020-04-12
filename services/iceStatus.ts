@@ -4,6 +4,9 @@ export type IceStatus = {
   status: string;
 };
 
-export const [useIceStatus, setIceStatus] = createService<IceStatus>({
+const { select, set } = createService<IceStatus>({
   status: 'before connected'
 });
+
+export const setIceStatus = set();
+export const selectIceStatus = select();
