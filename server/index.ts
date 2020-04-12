@@ -35,6 +35,8 @@ const counter = createCounter();
 const m = {};
 wss.on('connection', (ws, req) => {
   console.log(req.connection.remoteAddress);
+  ws.send(JSON.stringify({ type: 'RTC/join@server', id: counter.next().value }));
+
   ws.on('message', (data) => {
     let d: MeowEvent = JSON.parse(data.toString());
 

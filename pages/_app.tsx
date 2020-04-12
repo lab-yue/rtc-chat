@@ -1,24 +1,41 @@
-import { Provider } from 'react-redux';
-import store from '../store';
+import { Global, css } from '@emotion/core';
+import { ThemeProvider } from 'emotion-theming';
+import { useTheme } from '../services';
+import { useMemo, FC } from 'react';
 
 function MyApp({ Component, pageProps }) {
+  const memoizedComponent = useMemo(() => <Component {...pageProps} />, []);
+
   return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
+    <>
+      <Theme>{memoizedComponent}</Theme>
+    </>
   );
 }
 
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
+const Theme: FC = ({ children }) => {
+  const theme = useTheme();
+  return (
+    <>
+      <Global
+        styles={css`
+          html,
+          body {
+            margin: 0;
+            background: ${theme.color.paper};
+          }
+          ul {
+            list-style: none;
+          }
+          a {
+            display: block;
+            color: currentColor;
+          }
+        `}
+      />
+      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    </>
+  );
+};
 
 export default MyApp;

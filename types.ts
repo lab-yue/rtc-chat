@@ -1,3 +1,5 @@
+import type { User, Theme, IceStatus, UserList } from './services';
+export type { User, Theme, IceStatus, UserList };
 export type ValueOf<T> = T[keyof T];
 
 export type MeowEventBase = {
@@ -18,18 +20,3 @@ export type MeowEventBase = {
 export type MeowEventType = keyof MeowEventBase;
 export type MeowEventOf<T extends MeowEventType> = { type: T } & MeowEventBase[T];
 export type MeowEvent = ValueOf<{ [K in MeowEventType]: MeowEventOf<K> }>;
-
-enum UserStatus {
-  online = 1,
-  offline = 0
-}
-
-export type User = {
-  id: string;
-  name: string;
-  status: UserStatus;
-};
-
-export type Ice = {
-  status: string;
-};

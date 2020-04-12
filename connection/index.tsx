@@ -1,6 +1,6 @@
 import { MeowEventType, MeowEvent, MeowEventOf } from '../types';
 import { MutableRefObject, useRef } from 'react';
-import store, { addUser, setUserName, setIceStatus } from '../store';
+import { setUserList, setUser, setIceStatus } from '../services';
 
 export let wsc: WebSocket;
 
@@ -127,14 +127,12 @@ export const remoteAnswer = async () => {
   });
 };
 
-export const useRTCContext = (local: string) => {
-  let done = false;
-
+export const useRTC = (local: string) => {
   const localRef: MutableRefObject<HTMLVideoElement> = useRef();
   const remoteRef: MutableRefObject<HTMLVideoElement> = useRef();
 
   if (!process.browser) return { localRef, remoteRef };
-  console.log('useRTCContext');
+
   const exchangeCandidate = (peerConnection: RTCPeerConnection, remote: string) => {
     peerConnection.onicecandidate = (e) => {
       if (e.candidate) {
@@ -143,10 +141,6 @@ export const useRTCContext = (local: string) => {
       }
     };
     peerConnection.ontrack = (e) => {
-      //if (done) return;
-      //done = true;
-      console.log('ontrack');
-      console.log(e.streams);
       attachStreamToVideo(remoteRef, e.streams[0]);
     };
 
@@ -167,7 +161,6 @@ export const useRTCContext = (local: string) => {
   };
 
   const call = async (remote: string) => {
-    console.log({ remote });
     const peerConnection = await createPeerConnection(remoteRef);
     exchangeCandidate(peerConnection, remote);
     const stream = await getUserMedia();
@@ -187,7 +180,6 @@ export const useRTCContext = (local: string) => {
   };
 
   const answer = async (data: MeowEventOf<'RTC/invite'>) => {
-    console.log({ answer: data.local });
     const peerConnection = await createPeerConnection(remoteRef);
     exchangeCandidate(peerConnection, data.local);
 
