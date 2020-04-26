@@ -19,10 +19,16 @@ const Theme: FC = ({ children }) => {
     <>
       <Global
         styles={css`
+          @font-face {
+            font-family: 'Baloo Bhaina 2';
+            src: url('/BalooBhaina2-Regular.woff2') format('woff2');
+          }
           html,
           body {
             margin: 0;
-            background: ${theme.color.paper};
+            background: ${theme.color.primary};
+            text-align: center;
+            font-family: 'Baloo Bhaina 2';
           }
           ul {
             list-style: none;

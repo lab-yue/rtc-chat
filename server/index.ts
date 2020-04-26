@@ -19,11 +19,11 @@ const server = https.createServer(
   app
 );
 //app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
 
 nextApp.prepare().then(() => {
-  app.get('*', (res, req) => nextHandler(res, req));
+  app.all('*', (res, req) => nextHandler(res, req));
   server.listen(3000, () => {
     console.log('ok');
   });
