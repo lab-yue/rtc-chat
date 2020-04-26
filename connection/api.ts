@@ -5,13 +5,14 @@ type SuccessResponse = { status: 200 };
 type APICollection = {
   '/signup': User;
 };
-type ErrorResponse = {
+export type ErrorResponse = {
   message: string;
+  ref?: string;
 };
 
 type APIResponse<T> = {
   data?: T;
-  error?: ErrorResponse;
+  error?: ErrorResponse[];
 };
 export async function useAPI<P extends keyof APICollection, D = object>(
   path: P,
@@ -19,26 +20,32 @@ export async function useAPI<P extends keyof APICollection, D = object>(
 ): Promise<APIResponse<APICollection[P]>> {
   console.log(`request to "/api${path}", ${JSON.stringify(postData)}`);
   try {
+    let res: Response;
     if (postData === undefined) {
-      const res = await fetch(`/api${path}`);
-      const data: APICollection[P] = await res.json();
-      return { data };
+      res = await fetch(`/api${path}`);
+    } else {
+      res = await fetch(`/api${path}`, {
+        body: JSON.stringify(postData),
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
     }
-    const res = await fetch(`/api${path}`, {
-      body: JSON.stringify(postData),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data: APICollection[P] = await res.json();
+    const data = await res.json();
+    console.log({ status: res.status });
+    if (res.status > 200) {
+      return { error: data };
+    }
     return { data };
   } catch (e) {
     console.log(e);
     return {
-      error: {
-        message: e?.response?.data?.message ?? 'network error'
-      }
+      error: [
+        {
+          message: 'network error'
+        }
+      ]
     };
   }
 }

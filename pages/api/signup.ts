@@ -2,12 +2,25 @@ import { PrismaClient } from '@prisma/client';
 import { RequestHandler } from 'express';
 
 const signUp: RequestHandler = async (req, res) => {
-  console.log({ body: req.body });
   if (req.method === 'POST') {
-    const prisma = new PrismaClient();
+    const prisma = new PrismaClient({ errorFormat: 'pretty' });
     const { name, email, password } = req.body;
-    const user = await prisma.user.create({ data: { name, email, password } });
-    res.send(JSON.stringify(user));
+    if (!name) {
+      res.status(400).json([{ message: 'required', ref: 'name' }]);
+      return;
+    }
+
+    if (!password) {
+      res.status(400).json([{ message: 'required', ref: 'password' }]);
+      return;
+    }
+
+    try {
+      const user = await prisma.user.create({ data: { name, email, password } });
+      res.json(user);
+    } catch (e) {
+      res.status(400).json(e.meta.target.map((t: string) => ({ message: `please check ${t}`, ref: t })));
+    }
   }
 };
 
