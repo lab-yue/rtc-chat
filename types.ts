@@ -14,6 +14,7 @@ export type MeowEventBase = {
       }
     | { local: string; remote: string; reply: 'refuse' };
   'RTC/invite': { local: string; remote: string; sdp: RTCSessionDescription };
+  'chat/message': { message: string; createdAt: string; sender: string };
 };
 
 export type MeowServerEventBase = {
