@@ -3,7 +3,7 @@ import { User } from './userInfo';
 export type UserList = {
   users: Record<string, User>;
 };
-const { set, telepathy } = createTelepathyChannel<UserList>({ users: {} }, 'Theme');
+const { set, telepathy } = createTelepathyChannel<UserList>({ users: {} }, 'User');
 
 export const selectUsers = () => useTelepathy(telepathy, (s) => Object.values(s.users));
 

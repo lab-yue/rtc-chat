@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import next from 'next';
 import fs from 'fs';
 import path from 'path';
-import { MeowEvent } from '../types';
+import { MeowClientEvent } from '../types';
 
 const dev = process.env.NODE_ENV !== 'production';
 const nextApp = next({ dev });
@@ -37,14 +37,14 @@ wss.on('connection', (ws, req) => {
   console.log(req.connection.remoteAddress);
 
   ws.on('message', (data) => {
-    let d: MeowEvent = JSON.parse(data.toString());
-
+    let d: MeowClientEvent = JSON.parse(data.toString());
+    console.log({ d });
     if (d.type == 'RTC/join') {
       wss.clients.forEach((client) => {
         if (client.readyState === WebSocket.OPEN) {
           // @ts-ignore
           m[d.name] = client;
-          client.send(JSON.stringify({ ...d, type: 'RTC/join@server', id: counter.next().value }));
+          client.send(JSON.stringify({ ...d, type: 'RTC/join', id: counter.next().value }));
           // @ts-ignore
           console.log(d.name);
         }
