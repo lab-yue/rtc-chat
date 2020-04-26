@@ -1,5 +1,5 @@
 import { styled } from '../global';
-import { selectUsers } from '../services';
+import { selectUsers, startCall } from '../services';
 
 export function UserList() {
   const users = selectUsers();
@@ -7,7 +7,7 @@ export function UserList() {
     <List>
       {users.map((user) => (
         <li key={user.id}>
-          {user.name} <button onClick={() => call(user.name)}>Ask media</button>
+          {user.name} <button onClick={() => startCall(user)}>Ask media</button>
         </li>
       ))}
     </List>

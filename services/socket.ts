@@ -1,4 +1,4 @@
-import { MeowEventType, MeowEvent, MeowEventOf } from '../types';
+import { MeowEvent, MeowEventOf } from '../types';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';

@@ -1,12 +1,15 @@
-import { createService } from '../utils';
+import { createTelepathyChannel } from '@lirica/telepathy';
 
 export type IceStatus = {
   status: string;
 };
 
-const { select, set } = createService<IceStatus>({
-  status: 'before connected'
-});
+const { set, select } = createTelepathyChannel<IceStatus>(
+  {
+    status: 'before connected'
+  },
+  'IceStatus'
+);
 
 export const setIceStatus = set();
 export const selectIceStatus = select();

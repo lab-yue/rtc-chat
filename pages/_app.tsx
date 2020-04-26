@@ -3,7 +3,7 @@ import { ThemeProvider } from 'emotion-theming';
 import { selectTheme } from '../services';
 import { useMemo, FC } from 'react';
 
-function MyApp({ Component, pageProps }) {
+export default function Meow({ Component, pageProps }) {
   const memoizedComponent = useMemo(() => <Component {...pageProps} />, []);
 
   return (
@@ -37,5 +37,3 @@ const Theme: FC = ({ children }) => {
     </>
   );
 };
-
-export default MyApp;

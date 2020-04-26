@@ -1055,6 +1055,13 @@
     eslint-plugin-react "^7.19.0"
     eslint-plugin-react-hooks "^3.0.0"
 
+"@lirica/telepathy@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@lirica/telepathy/-/telepathy-0.0.2.tgz#8a5c461ab1a7c1084e8133033a3e5232c19039f9"
+  integrity sha512-sJFX4LLPuDymOCmm1z8D2mUAIaenQbCkZINPcq244IB6nWXfRzw3YDjJB/aLRqWknbceoBWblGexphqma4MvYA==
+  dependencies:
+    react "^16.13.1"
+
 "@types/body-parser@*":
   version "1.19.0"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.0.tgz#0685b3c47eb3006ffed117cdd55164b61f80538f"
@@ -4920,7 +4927,7 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react@16.13.1:
+react@16.13.1, react@^16.13.1:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
   integrity sha512-YMZQQq32xHLX0bz5Mnibv1/LHb3Sqzngu7xstSM+vrkE5Kzr9xE0yMByK5kMoTK30YVJE61WfbxIFFvfeDKT1w==

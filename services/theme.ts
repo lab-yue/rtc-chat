@@ -1,4 +1,4 @@
-import { createService } from '../utils';
+import { createTelepathyChannel } from '@lirica/telepathy';
 
 export type Theme = {
   color: {
@@ -9,13 +9,19 @@ export type Theme = {
   };
 };
 
-const { select } = createService<Theme>({
-  color: {
-    primary: '#22c7a9',
-    secondary: '#2db6a3',
-    accent: '#fccf4d',
-    paper: '#fef3cc'
-  }
-});
+const { select } = createTelepathyChannel<Theme>(
+  {
+    color: {
+      primary: '#22c7a9',
+      secondary: '#2db6a3',
+      accent: '#fccf4d',
+      paper: '#fef3cc'
+    }
+  },
+  'xxx'
+);
 
-export const selectTheme = select();
+export const selectTheme = select((s) => {
+  console.log(s);
+  return s;
+});
