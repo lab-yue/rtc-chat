@@ -4,6 +4,7 @@ type SuccessResponse = { status: 200 };
 
 type APICollection = {
   '/signup': User;
+  '/signin': User;
 };
 export type ErrorResponse = {
   message: string;
