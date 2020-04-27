@@ -1,4 +1,5 @@
-import type { User, Theme, IceStatus, UserList } from './services';
+import type { User } from '@prisma/client';
+import type { Theme, IceStatus, UserList } from './services';
 export type { User, Theme, IceStatus, UserList };
 export type ValueOf<T> = T[keyof T];
 

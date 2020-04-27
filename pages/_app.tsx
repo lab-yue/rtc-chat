@@ -2,9 +2,10 @@ import { Global, css } from '@emotion/core';
 import { ThemeProvider } from 'emotion-theming';
 import { selectTheme } from '../services';
 import { useMemo, FC } from 'react';
-
+import { useRouter } from 'next/router';
 export default function Meow({ Component, pageProps }) {
-  const memoizedComponent = useMemo(() => <Component {...pageProps} />, []);
+  const router = useRouter();
+  const memoizedComponent = useMemo(() => <Component {...pageProps} />, [router.pathname]);
 
   return (
     <>
@@ -26,7 +27,7 @@ const Theme: FC = ({ children }) => {
           html,
           body {
             margin: 0;
-            background: ${theme.color.primary};
+            background: ${theme.primary};
             text-align: center;
             font-family: 'Baloo Bhaina 2';
           }

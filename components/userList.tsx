@@ -15,5 +15,5 @@ export function UserList() {
 }
 
 const List = styled.ul`
-  background-color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.primary};
 `;

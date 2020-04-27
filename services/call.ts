@@ -1,5 +1,5 @@
 import { createTelepathyChannel } from '@lirica/telepathy';
-import { User } from './userInfo';
+import { User } from '@prisma/client';
 
 export type Call = { calling: boolean; remote: User | null };
 const { select, set } = createTelepathyChannel<Call>(

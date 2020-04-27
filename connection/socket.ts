@@ -52,7 +52,7 @@ if (process.browser) {
   wsc = new WebSocket(`wss://x.dev:3000`);
   wsc.onopen = () => {
     sendMeowClientEvent({ type: 'RTC/join', name: navigator.platform });
-    setUser({ name: navigator.platform, id: navigator.platform, status: 0 });
+    // setUser({ name: navigator.platform, id: navigator.platform, status: 0 });
   };
   wsc.addEventListener('message', (e) => {
     const data = parseMeowEvent<MeowClientEvent>(e);

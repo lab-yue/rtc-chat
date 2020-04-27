@@ -1,7 +1,6 @@
 import WebSocket from 'ws';
 import express from 'express';
 import https from 'https';
-import bodyParser from 'body-parser';
 import next from 'next';
 import fs from 'fs';
 import path from 'path';
@@ -18,9 +17,6 @@ const server = https.createServer(
   },
   app
 );
-//app.use(cors());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
 
 nextApp.prepare().then(() => {
   app.all('*', (res, req) => nextHandler(res, req));

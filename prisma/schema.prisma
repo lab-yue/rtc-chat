@@ -39,7 +39,13 @@ model User {
   name      String
   password  String
   updatedAt DateTime @updatedAt
+  status    Status   @default(Online)
   contacts  User[]   @relation("UserToUser")
   chats     Chat[]   @relation("UserChats", references: [id])
   userId    Int?
+}
+
+enum Status {
+  Online
+  Offline
 }
